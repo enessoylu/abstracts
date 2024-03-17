@@ -34,11 +34,13 @@
 // The Cancellation Law for Groups: Let (G,⋅) be a group and let a,b,c∈G. If a⋅b=a⋅c or b⋅a=c⋅a then b=c.
 
 type UnaryOperation<T> = (s: T) => T
-type BinaryOperation<T, U = T, V = any> = (s: T, t: U) => V
+type BinaryOperation<T, U = T, V = T> = (s: T, t: U) => V
 
-interface Monoid<T> {
+interface Semigroup<T> {
     set: T[]
     mul: BinaryOperation<T>
+}
+interface Monoid<T> extends Semigroup<T> {
     e: T
 }
 
@@ -65,13 +67,13 @@ type Endomorphism<T1, T2> = Homomorphism<T1, T2>
 /* An endomorphism which is also an isomorphism is called an automorphism. */
 type Automorphism<T1, T2> = Homomorphism<T1, T2>
 
-// |xH| = |H|, Langrange theorem: |H| | |G|
+// |xH| = |H|, Lagrange theorem: |H| | |G|
 type Coset<T> = T[]
 
 /* number of left cosets of H under G */
 type IndexOfSubgroup = number;
 
-export type{
+export type {
     Group,
     Isomorphism,
     Coset,

@@ -1,5 +1,5 @@
-import { Homomorphism } from "../types";
-import { Group, printTable } from "./implement";
+import { Group, Homomorphism } from "../types";
+import { printTable } from "./implement";
 
 type Orbit<T> = (a: T) => T[]
 
@@ -67,17 +67,17 @@ class Action<G, A> { // left group action
 
   /* g.a */
   print_ga() {
-    printTable(this.group.set, this.set, (g, a) => this.map([g, a]))
+    printTable(this.group)
   }
 
   /* (g.h) a */
   print_gha() {
-    printTable(this.group.set, this.group.set,
-      (g, h) => this.set.map(a => {
-        const gh = this.group.mul(g, h)
-        // console.log(gh.toString(), a)
-        return a + ': ' + this.map([gh, a])
-      }).join('  '))
+    // printTable(this.group.set, this.group.set,
+    //   (g, h) => this.set.map(a => {
+    //     const gh = this.group.mul(g, h)
+    //     // console.log(gh.toString(), a)
+    //     return a + ': ' + this.map([gh, a])
+    //   }).join('  '))
   }
 }
 
