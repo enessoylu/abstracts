@@ -1,5 +1,5 @@
 import { Group, Homomorphism } from "../types";
-import { printTable } from "./implement";
+import { printTable } from "./helpers";
 
 type Orbit<T> = (a: T) => T[]
 
