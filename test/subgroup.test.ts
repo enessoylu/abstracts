@@ -1,14 +1,5 @@
-import { Permutation, permute, printTable } from "../groups"
-import { BinaryOperation, Group, UnaryOperation } from "../types";
-
-const getPermMul = (items: Permutation[]): BinaryOperation<Permutation> => (p1: Permutation, p2: Permutation) => {
-  const r = p1.multiply(p2);
-  return items.find(p => p.toString() === r.toString())
-}
-
-const getPermInverse = (items: Permutation[], mul: BinaryOperation<Permutation>): UnaryOperation<Permutation> => (p: Permutation) => {
-  return items.find(maybe_pPrime => mul(p, maybe_pPrime).toString() === '')
-}
+import { Permutation, getPermInverse, getPermMul, permute, printTable } from "../groups"
+import { Group } from "../types";
 
 test('Subgroups', () => {
   const perm3 = permute(3)

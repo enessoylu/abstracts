@@ -1,14 +1,6 @@
-import { Permutation, permute } from "../groups"
+import { Permutation, getPermInverse, getPermMul, permute } from "../groups"
 import { Action } from "../groups/action";
-import { BinaryOperation, Group, Homomorphism, UnaryOperation } from "../types";
-
-const getPermMul = (items: Permutation[]) => (p1: Permutation, p2: Permutation) => {
-  const r = p1.multiply(p2);
-  return items.find(p => p.toString() === r.toString())
-}
-const getPermInverse = (items: Permutation[], mul: BinaryOperation<Permutation>): UnaryOperation<Permutation> => (p: Permutation) => {
-  return items.find(maybe_pPrime => mul(p, maybe_pPrime).toString() === '')
-}
+import { Group, Homomorphism } from "../types";
 
 test('Actions', () => {
   const perm3 = permute(3)

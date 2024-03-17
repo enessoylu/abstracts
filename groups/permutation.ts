@@ -1,6 +1,7 @@
+import { BinaryOperation, UnaryOperation } from "../types";
 import { range } from "../utils";
 
-export const permute = (length: number) => {
+const permute = (length: number) => {
   return permuteRec(range(length, 1))
 }
 const permuteRec = <T>(list: T[], acc = [], left = []): T[][] => {
@@ -18,7 +19,7 @@ const permuteRec = <T>(list: T[], acc = [], left = []): T[][] => {
   return acc;
 }
 
-export class Permutation {
+class Permutation {
   private value: number[];
 
   constructor(value: number[]) {
@@ -80,4 +81,20 @@ export class Permutation {
 
     return cycles.map(c => `(${c.join(',')})`).join('')
   }
+}
+
+const getPermMul = (items: Permutation[]): BinaryOperation<Permutation> => (p1: Permutation, p2: Permutation) => {
+  const r = p1.multiply(p2);
+  return items.find(p => p.toString() === r.toString())
+}
+
+const getPermInverse = (items: Permutation[], mul: BinaryOperation<Permutation>): UnaryOperation<Permutation> => (p: Permutation) => {
+  return items.find(maybe_pPrime => mul(p, maybe_pPrime).toString() === '')
+}
+
+export {
+  Permutation,
+  permute,
+  getPermInverse,
+  getPermMul
 }
