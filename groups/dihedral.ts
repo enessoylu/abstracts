@@ -3,32 +3,46 @@
 // s,t are adjacent axes of symmetry on n-gon, st is a rotation
 // s = rf, t = f, st = rff
 import { Group } from "../types/group";
+import { range } from "../utils";
 
-const d4 = ["e", "r", "rr", "rrr", "s", "sr", "srr", "srrr"] as const;
-const d4MultiplicationTable = [
-/* e   */["e", "r", "rr", "rrr", "s", "sr", "srr", "srrr"],
-/* r   */["r", "rr", "rrr", "e", "sr", "srr", "srrr", "s"],
-/* rr  */["rr", "rrr", "e", "r", "srr", "srrr", "s", "sr"],
-/* e   */["e", "r", "rr", "rrr", "s", "sr", "srr", "srrr"],
-/* rrr */["rrr", "e", "r", "rr", "srrr", "s", "sr", "srr"],
-]
+export const DihedralGroupOfOrder = (order: number) => {
+  const set = dihedralSetOfOrder(order);
+  const mul = dihedralMulOfOrder(order);
+  const inverse = dihedralInverseOfOrder(order);
 
-class D4 implements Group<string> {
-  set = [...d4]
-  e = "e"
-  order = this.set.length
-
-  mul(x, y) {
-    const xIdx = d4.indexOf(x)
-    const yIdx = d4.indexOf(y)
-    return d4MultiplicationTable[xIdx][yIdx]
-  }
-  inverse(x) {
-    const xIdx = d4.indexOf(x)
-    return d4[d4MultiplicationTable[xIdx].indexOf("e")]
+  return class implements Group<string> {
+    set = set;
+    mul = mul;
+    e = '';
+    inverse = inverse
   }
 }
 
-export {
-  D4
+export const dihedralInverseOfOrder = (order: number) => (a: string): string => {
+  const mul = dihedralMulOfOrder(order)
+  const aSimplified = mul(a, '');
+  const num_r = aSimplified.match(/r/g)?.length ?? 0;
+  const num_s = aSimplified.match(/s/g)?.length ?? 0;
+  return mul('r'.repeat(order / 2 - num_r), 's'.repeat(num_s))
+}
+
+export const dihedralSetOfOrder = (order: number) => {
+  const set = [''];
+  // rotations
+  range(order / 2 - 1, 1).map(n => set.push('r'.repeat(n)))
+  // rotation + reflection
+  range(order / 2).map(n => set.push('s' + 'r'.repeat(n)))
+
+  return set;
+}
+
+export const dihedralMulOfOrder = (order: number) => (a: string, b: string): string => {
+  let c = a + b + 'r'.repeat(order / 2) // extra r's for rs;
+  const rn = 'r'.repeat(order / 2)
+  while (['ss', 'rsr', rn].some(d => c.includes(d))) {
+    c = c.replaceAll('ss', '')
+      .replaceAll('rsr', 's')
+      .replaceAll(rn, '')
+  }
+  return c
 }
