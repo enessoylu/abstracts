@@ -1,5 +1,4 @@
 import { Group, Homomorphism } from "../types";
-import { printTable } from "./helpers";
 
 type Orbit<T> = (a: T) => T[]
 
@@ -11,76 +10,51 @@ type Orbit<T> = (a: T) => T[]
 
     e.a = a for ∀ a ∈ A
 */
-class Action<G, A> { // left group action
+interface Action<G, A> { // left group action
   group: Group<G>;
   set: A[];
   map: Homomorphism<[G, A], A>; // f = G x A -> A 
+}
 
-  constructor(group: Group<G>, set: A[], map: Homomorphism<[G, A], A>) {
-    this.group = group;
-    this.set = set;
-    this.map = map;
+const orbit = <G, A>(a: A, action: Action<G, A>) => {
+  const A = action.set;
+  const G = action.group.set;
+  const map = action.map;
 
-    const firstPropertyHolds = this.checkFirstProperty();
-    const secondPropertyHolds = this.checkSecondProperty();
+  return G.flatMap(g => A.map(b => [g, b] satisfies [G, A]))
+    .filter(([g, b]) => map([g, b]) === a)
+}
 
-    console.log(firstPropertyHolds)
-    console.log(secondPropertyHolds)
-  }
+const stabilizer = <G, A>(a: A, action: Action<G, A>) =>  {
+  const G = action.group.set;
+  const map = action.map;
 
-  orbit(a: A) {
-    const A = this.set;
-    const G = this.group.set;
-    const map = this.map;
+  return G.filter(g => map([g, a]) === a)
+}
 
-    return G.flatMap(g => A.map(b => [g, b] satisfies [G, A]))
-      .filter(([g, b]) => map([g, b]) === a)
-  }
+/* e.a = a for ∀ a ∈ A */
+const checkFirstProperty = <G, A>(action: Action<G, A>) => {
+  const e = action.group.e;
+  const A = action.set;
+  return A.every(a => action.map([e, a]) === a)
+}
 
-  stabilizer(a: A) {
-    const G = this.group.set;
-    const map = this.map;
+/* ∀ g, h ∈ G and ∀ a ∈ A | g (h.a) = (g.h) a */
+const checkSecondProperty = <G, A>(action: Action<G, A>) => {
+  const A = action.set;
+  const G = action.group.set;
+  const mul = action.group.mul;
+  const map = action.map;
 
-    return G.filter(g => map([g, a]) === a)
-  }
-
-  /* e.a = a for ∀ a ∈ A */
-  checkFirstProperty() {
-    const e = this.group.e;
-    const A = this.set;
-    return A.every(a => this.map([e, a]) === a)
-  }
-
-  /* ∀ g, h ∈ G and ∀ a ∈ A | g (h.a) = (g.h) a */
-  checkSecondProperty() {
-    const A = this.set;
-    const G = this.group.set;
-    const mul = this.group.mul;
-    const map = this.map;
-
-    return G.every(g => G.every(h => A.every(a => {
-      const gh = mul(g, h);
-      const ha = map([h, a]);
-      return map([g, ha]) === map([gh, a])
-    })))
-  }
-
-  /* g.a */
-  print_ga() {
-    printTable(this.group)
-  }
-
-  /* (g.h) a */
-  print_gha() {
-    // printTable(this.group.set, this.group.set,
-    //   (g, h) => this.set.map(a => {
-    //     const gh = this.group.mul(g, h)
-    //     // console.log(gh.toString(), a)
-    //     return a + ': ' + this.map([gh, a])
-    //   }).join('  '))
-  }
+  return G.every(g => G.every(h => A.every(a => {
+    const gh = mul(g, h);
+    const ha = map([h, a]);
+    return map([g, ha]) === map([gh, a])
+  })))
 }
 
 export {
-  Action
+  Action,
+  checkFirstProperty,
+  checkSecondProperty,
 }

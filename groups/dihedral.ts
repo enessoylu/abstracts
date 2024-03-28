@@ -5,16 +5,16 @@
 import { Group } from "../types/group";
 import { range } from "../utils";
 
-export const DihedralGroupOfOrder = (order: number) => {
+export const DihedralGroupOfOrder = (order: number): Group<string> => {
   const set = dihedralSetOfOrder(order);
   const mul = dihedralMulOfOrder(order);
   const inverse = dihedralInverseOfOrder(order);
 
-  return class implements Group<string> {
-    set = set;
-    mul = mul;
-    e = '';
-    inverse = inverse
+  return  {
+    set,
+    mul,
+    e: '',
+    inverse,
   }
 }
 
