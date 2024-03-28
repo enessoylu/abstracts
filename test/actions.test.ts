@@ -1,35 +1,37 @@
 import { Permutation, getPermInverse, getPermMul, permute } from "../groups"
-import { Action } from "../groups/action";
+import { Action, checkFirstProperty, checkSecondProperty } from "../groups/action";
+import { DihedralGroupOfOrder } from "../groups/dihedral";
 import { Group, Homomorphism } from "../types";
 
-test('Actions', () => {
-  const perm3 = permute(3)
+describe('Actions', () => {
+  it('D4 action on rectangle', () => {
+    //   B┌────┐C
+    //    │    │ 
+    //    │    │ 
+    //   A└────┘D 
+    const set = ['A', 'B', 'C', 'D'];
+    const D4 = DihedralGroupOfOrder(8);
+    const map: Homomorphism<[string, string], string> = ([g, a]) => {
+      const idx = set.indexOf(a);
+      return {
+        '': ['A', 'B', 'C', 'D'],
+        'r': ['B', 'C', 'D', 'A'],
+        'rr': ['C', 'D', 'A', 'B'],
+        'rrr': ['D', 'A', 'B', 'C'],
+        's': ['B', 'A', 'D', 'C'],
+        'sr': ['A', 'D', 'C', 'B'],
+        'srr': ['D', 'C', 'B', 'A'],
+        'srrr': ['C', 'B', 'A', 'D'],
+      }[g][idx]
+    }
+              
+    const action: Action<string, string> = {
+      group: D4,
+      set,
+      map,
+    }
 
-  const items = perm3.map(p => new Permutation(p))
-  const e = items.find(p => p.toString() === '')
-  const mul = getPermMul(items)
-  const inverse = getPermInverse(items, mul)
-
-  const s3 = new (class implements Group<Permutation> {
-    e = e
-    set = items
-
-    mul = mul
-    inverse = inverse
-
+    expect(checkFirstProperty(action)).toBe(true)
+    expect(checkSecondProperty(action)).toBe(true)
   })
-
-  const A = ['a', 'b']
-  const map: Homomorphism<[Permutation, string], string> = ([g, a]) => {
-    if (g === s3.e) return a;
-
-    if (['(1,2,3)', '(1,3,2)'].includes(g.toString())) return a
-
-    return a === 'b' ? 'a' : 'b'
-  }
-  const action = new Action(s3, A, map)
-
-  action.print_ga()
-  action.print_gha()
-
 })
