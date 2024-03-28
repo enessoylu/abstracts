@@ -6,6 +6,7 @@ test('dihedral multiplication', () => {
     expect(mul('rrr', 'rr')).toBe('r')
     expect(mul('rsr', 'rrr')).toBe('srrr')
     expect(mul('rsrs', 'r')).toBe('r')
+    expect(mul('rs', '')).toBe('srrr')
 })
 
 test('dihedral set', () => {

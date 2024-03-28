@@ -37,12 +37,13 @@ export const dihedralSetOfOrder = (order: number) => {
 }
 
 export const dihedralMulOfOrder = (order: number) => (a: string, b: string): string => {
-  let c = a + b + 'r'.repeat(order / 2) // extra r's for rs;
   const rn = 'r'.repeat(order / 2)
-  while (['ss', 'rsr', rn].some(d => c.includes(d))) {
+  let c = a + b;
+  while (['ss', 'rsr', rn, 'rs'].some(d => c.includes(d))) {
     c = c.replaceAll('ss', '')
       .replaceAll('rsr', 's')
       .replaceAll(rn, '')
+      .replaceAll('rs', 'rs' + rn)
   }
   return c
 }
