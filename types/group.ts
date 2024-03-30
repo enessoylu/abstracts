@@ -34,10 +34,10 @@
 // The Cancellation Law for Groups: Let (G,⋅) be a group and let a,b,c∈G. If a⋅b=a⋅c or b⋅a=c⋅a then b=c.
 
 type UnaryOperation<T> = (s: T) => T
-type BinaryOperation<T, U = T, V = T> = (s: T, t: U) => V
+type BinaryOperation<T> = (s: T, t: T) => T
 
 interface Semigroup<T> {
-    set: T[]
+    readonly set: T[]
     mul: BinaryOperation<T>
 }
 interface Monoid<T> extends Semigroup<T> {
