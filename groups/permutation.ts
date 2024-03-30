@@ -26,8 +26,8 @@ const multiply = (a: number[], b: number[]) => {
     if (b[idx] === undefined) b.push(num)
   })
 
-  return a.map((e) => {
-    return b[e - 1]
+  return b.map((e) => {
+    return a[e - 1]
   })
 }
 
