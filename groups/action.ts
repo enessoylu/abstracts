@@ -49,7 +49,10 @@ const checkSecondProperty = <G, A>(action: Action<G, A>) => {
   return G.every(g => G.every(h => A.every(a => {
     const gh = mul(g, h);
     const ha = map([h, a]);
-    return map([g, ha]) === map([gh, a])
+    const g_ha = map([g, ha]);
+    const gh_a = map([gh, a])
+
+    return g_ha === gh_a;
   })))
 }
 
