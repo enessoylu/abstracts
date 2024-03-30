@@ -1,13 +1,14 @@
-import { BinaryOperation, UnaryOperation } from "../types";
 import { range } from "../utils";
+
+const CycleListMatchRegexp = /\(([\d|\,]*)\)/g;
 
 const permute = (length: number) => {
   return permuteRec(range(length, 1))
 }
-const permuteRec = <T>(list: T[], acc = [], left = []): T[][] => {
+const permuteRec = <T>(list: T[], acc: T[][] = [], left: T[] = []): T[][] => {
   if (list.length === 1) {
     acc.push([...left, list[0]])
-    return;
+    return acc;
   }
 
   list.forEach(e => {
@@ -19,82 +20,114 @@ const permuteRec = <T>(list: T[], acc = [], left = []): T[][] => {
   return acc;
 }
 
-class Permutation {
-  private value: number[];
+const multiply = (a: number[], b: number[]) => {
+  range(Math.max(a.length, b.length), 1).forEach((num, idx) => {
+    if (a[idx] === undefined) a.push(num)
+    if (b[idx] === undefined) b.push(num)
+  })
 
-  constructor(value: number[]) {
-    this.value = value;
-  }
+  return a.map((e) => {
+    return b[e - 1]
+  })
+}
 
-  static fromCycles(cyclesStr: string, length: number) {
-    const value = range(length, 1);
-    if (cyclesStr === '') return new Permutation(value);
+const fromCycles = (cyclesStr: string) => {
+  if (cyclesStr === '') return [];
 
-    cyclesStr
-      .substring(1, cyclesStr.length - 1)
-      .split(')(')
-      .map(s => s.split(',').map(Number))
-      .filter(c => c.length > 1)
-      .forEach(c => {
-        c.forEach((e, idx) => {
-          value[e - 1] = c[(idx + 1) % c.length]
-        })
-      })
+  const length = cyclesStr.match(/[\d]+/g)
+    ?.reduce((max, numStr) => Math.max(max, parseInt(numStr)), -Infinity)
+    ?? 0;
 
-    return new Permutation(value)
-  }
+  const cycleLists = Array.from(cyclesStr.matchAll(CycleListMatchRegexp))
+    .map(([_, listString]) => listString.split(',').map(nStr => parseInt(nStr)))
 
-  multiply(p: Permutation) {
-    const value = [...this.value]
-      .map((e) => {
-        return p.value[e - 1]
-      })
+  if (cycleLists.length === 0) return []
 
-    return new Permutation(value);
-  }
+  const endResult = identityPermObject(length)
+  cycleLists.reverse().forEach(list => {
+    const cycleAsObj = identityPermObject(length);
+    for (let i = 0; i < list.length; i++) {
+      const from = list[i];
+      const to = list[(i + 1) % list.length];
+      cycleAsObj[from] = to
+    }
+    Object.entries(endResult).forEach(([from, to]) => {
+      endResult[from] = cycleAsObj[to]
+    })
+  })
 
-  toString() {
-    const list = [...this.value].map((e, idx) => {
-      const from = idx + 1;
-      return from === e ? null : e;
-    });
-    const cycles = [];
-    for (let idx = 0; idx < list.length; idx++) {
-      const e = list[idx];
-      if (e === null) continue;
+  return Object.values(endResult)
+}
+type CycleAsObject = Record<number, number>
 
-      const from = idx + 1;
-      const cycle = [from, e];
+const identityPermObject = (length: number) => range(length, 1).reduce<CycleAsObject>((acc, num) => {
+  acc[num] = num;
+  return acc;
+}, {})
 
-      let to = list[e - 1];
-      while (to !== from) {
-        cycle.push(to);
-        to = list[to - 1]
-      }
+const toCycleString = (value: number[]) => {
+  if ([...new Set(value)].length !== value.length) return 'invalid-permutation-' + value
+  const list = [...value].map((e, idx) => {
+    const from = idx + 1;
+    return from === e ? null : e;
+  });
+  const cycles: number[][] = [];
+  for (let idx = 0; idx < list.length; idx++) {
+    const e = list[idx];
+    if (e === null) continue;
 
-      cycles.push(cycle);
-      cycle.forEach(e => {
-        const idx = e - 1;
-        list[idx] = null;
-      })
+    const from = idx + 1;
+    const cycle = [from, e];
+
+    let to = list[e - 1]!;
+    while (to !== from) {
+      cycle.push(to);
+      to = list[to - 1]!
     }
 
-    return cycles.map(c => `(${c.join(',')})`).join('')
+    cycles.push(cycle);
+    cycle.forEach(e => {
+      const idx = e - 1;
+      list[idx] = null;
+    })
   }
+
+  return cycles.map(c => `(${c.join(',')})`).join('')
 }
 
-const getPermMul = (items: Permutation[]): BinaryOperation<Permutation> => (p1: Permutation, p2: Permutation) => {
-  const r = p1.multiply(p2);
-  return items.find(p => p.toString() === r.toString())
+// (x₁ x₂ … xₙ)=(x₁ x₂)(x₂ x₃)⋯ (xₙ₋₁ xₙ)
+const asTransposes = (a: string) => {
+  const cycleLists = Array.from(a.matchAll(CycleListMatchRegexp))
+    .map(([_, listString]) => listString.split(','))
+  if (cycleLists.length === 0) return ''
+
+  return [...new Set(cycleLists
+    .flatMap(list => {
+      const transposes = list.map((item, idx) => [item, list[(idx + 1) % list.length]])
+      transposes.pop()
+      return transposes
+    })
+    .map(transpose => '(' + transpose.sort().join(',') + ')'))]
+    .join('')
 }
 
-const getPermInverse = (items: Permutation[], mul: BinaryOperation<Permutation>): UnaryOperation<Permutation> => (p: Permutation) => {
-  return items.find(maybe_pPrime => mul(p, maybe_pPrime).toString() === '')
+const inverseOfPermutation = (a: string) => {
+  const aAsTransposes = asTransposes(a);
+  const transposesInReverseOrder = Array.from(aAsTransposes.matchAll(CycleListMatchRegexp))
+    .map(([_, listString]) => listString.split(','))
+    .map(transpose => '(' + transpose.join(',') + ')')
+    .reverse()
+    .join()
+
+  // simplify
+  return toCycleString(fromCycles(transposesInReverseOrder))
 }
 
 export {
-  Permutation,
+  asTransposes,
+  fromCycles,
+  inverseOfPermutation,
+  multiply,
   permute,
-  getPermInverse,
-  getPermMul
+  toCycleString,
 }
