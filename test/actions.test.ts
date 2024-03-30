@@ -1,10 +1,11 @@
+import { CyclicGroupOf } from "../groups";
 import { Action, checkFirstProperty, checkSecondProperty } from "../groups/action";
 import { DihedralGroupOfOrder } from "../groups/dihedral";
 import { SymmetricGroupOf } from "../groups/symmetric";
-import { Homomorphism } from "../types";
+import { Group, Homomorphism } from "../types";
 
 describe('Actions', () => {
-  it('S3 acting on the set [1,2,3]', () => {
+  it('S3 acts on the set [1,2,3]', () => {
     const set = ['1', '2', '3'];
     const S3 = SymmetricGroupOf(3);
     const map: Homomorphism<[string, string], string> = ([g, a]) => {
@@ -29,7 +30,7 @@ describe('Actions', () => {
     expect(checkSecondProperty(action)).toBe(true)
   })
 
-  it('D4 acting on rectangle', () => {
+  it('D4 acts on rectangle', () => {
     //   B┌────┐C
     //    │    │ 
     //    │    │ 
@@ -59,4 +60,28 @@ describe('Actions', () => {
     expect(checkFirstProperty(action)).toBe(true)
     expect(checkSecondProperty(action)).toBe(true)
   })
+
+  it.each([
+    { name: 'S3', group: SymmetricGroupOf(3) },
+    { name: 'D4', group: DihedralGroupOfOrder(8) },
+    { name: 'C6', group: CyclicGroupOf(6) },
+  ])('G acts on itself by conjugation $name', ({ group }) => {
+    // (g,x) = g.x.g'
+    const G: Group<any> = group;
+    const X = G.set;
+    const map: Homomorphism<[any, any], any> = ([g, x]) => {
+      const gx = G.mul(g, x);
+      const gPrime = G.inverse(g);
+      return G.mul(gx, gPrime)
+    }
+    const action: Action<any, any> = {
+      group: G,
+      set: X,
+      map,
+    }
+
+    expect(checkFirstProperty(action)).toBe(true)
+    expect(checkSecondProperty(action)).toBe(true)
+  })
+
 })

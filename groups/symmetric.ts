@@ -7,7 +7,6 @@ const SymmetricGroupOf = (n: number): Group<string> => {
   const inverse = (a: string) => inverseOfPermutation(a)
   const set = permute(n).map(list => toCycleString(list).toString());
 
-
   return {
     e,
     set,
