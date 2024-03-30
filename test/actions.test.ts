@@ -1,7 +1,6 @@
-import { Permutation, getPermInverse, getPermMul, permute } from "../groups"
 import { Action, checkFirstProperty, checkSecondProperty } from "../groups/action";
 import { DihedralGroupOfOrder } from "../groups/dihedral";
-import { Group, Homomorphism } from "../types";
+import { Homomorphism } from "../types";
 
 describe('Actions', () => {
   it('D4 action on rectangle', () => {
@@ -22,7 +21,7 @@ describe('Actions', () => {
         'sr': ['A', 'D', 'C', 'B'],
         'srr': ['D', 'C', 'B', 'A'],
         'srrr': ['C', 'B', 'A', 'D'],
-      }[g][idx]
+      }[g]![idx]
     }
               
     const action: Action<string, string> = {
