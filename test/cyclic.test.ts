@@ -1,3 +1,4 @@
+import { expect, test } from "vitest";
 import { CyclicGroupOf } from "../groups"
 
 test('CyclicGroupOf', () => {

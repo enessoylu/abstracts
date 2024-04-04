@@ -3,6 +3,7 @@ import { Action, checkFirstProperty, checkSecondProperty } from "../groups/actio
 import { DihedralGroupOfOrder } from "../groups/dihedral";
 import { SymmetricGroupOf } from "../groups/symmetric";
 import { Group, Homomorphism } from "../types";
+import { describe, expect, it } from 'vitest'
 
 describe('Actions', () => {
   it('S3 acts on the set [1,2,3]', () => {

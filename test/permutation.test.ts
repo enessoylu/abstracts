@@ -1,3 +1,4 @@
+import { expect, test } from "vitest";
 import { asTransposes, fromCycles, toCycleString, multiply, permute } from "../groups";
 
 test('permute', () => {

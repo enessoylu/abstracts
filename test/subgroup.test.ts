@@ -1,3 +1,4 @@
+import { test } from "vitest";
 import { fromCycles, inverseOfPermutation, multiply, printTable, toCycleString } from "../groups"
 import { SymmetricGroupOf } from "../groups/symmetric";
 import { Group } from "../types";

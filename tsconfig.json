@@ -4,7 +4,6 @@
     "downlevelIteration": true,
     "moduleResolution": "Node",
     "lib": ["ESNEXT", "DOM"],
-    "target": "ES2022",
-    "types": ["vitest/globals"]
+    "target": "ES2022"
   }
 }

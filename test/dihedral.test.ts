@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest';
 import { dihedralInverseOfOrder, dihedralMulOfOrder, dihedralSetOfOrder } from '../groups/dihedral'
 
 test('dihedral multiplication', () => {
