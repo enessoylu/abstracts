@@ -1,4 +1,4 @@
-import { Group, Isomorphism } from "../types";
+import { BinaryOperation, Group, Isomorphism, UnaryOperation } from "../types";
 
 function checkIsomorphism<T1, T2>(G: Group<T1>, H: Group<T2>, ϕ: Isomorphism<T1, T2>) {
   if (G.set.length !== H.set.length) {
@@ -9,7 +9,7 @@ function checkIsomorphism<T1, T2>(G: Group<T1>, H: Group<T2>, ϕ: Isomorphism<T1
   const hSet = typeof H.set === "object"
     ? Object.values(H.set)
     : H.set;
-  
+
   const s = new Set(hSet)
   G.set.forEach(g => s.delete(ϕ(g)))
 
@@ -113,13 +113,59 @@ function inverseIsUnique<T>(G: Group<T>): boolean {
   return violations.length === 0;
 }
 
+function fromGenerator<T>(generatingSet: T[], mul: BinaryOperation<T>) {
+  // TODO Schreier-Sims Algorithm
+  // https://mathstrek.blog/2018/06/12/schreier-sims-algorithm/
+}
+
+function findIdentityElement<T>(group: Group<T>): T {
+  // find e for the first item in the set
+  const g = group.set.at(0);
+  const goe = group.set.filter((item) => group.mul(g, item) === g);
+  return goe[0];
+}
+
+function buildInverse<T>(group: Group<T>): UnaryOperation<T> {
+  return (a: T) => group.set.find(maybe_aInverse => group.mul(a, maybe_aInverse) === group.e);
+}
+
+function checkGroupProperties<T>(group: Group<T>) {
+  const eIsUnique = group.set.every(item => {
+    const eS = group.set.filter(maybe_e => group.mul(item, maybe_e) === item);
+    if (eS.length === 1) {
+      return true;
+    }
+
+    console.log(`e is not unique for ${item}, ${eS.join(', ')}`);
+    return false;
+  });
+
+  return eIsUnique;
+}
+
+function printGroup<T>(group: Group<T>) {
+  return `Set ${group.set.join(', ')}\n\te ${group.e}`;
+}
+
+function printTable<T>(group: Group<T>) {
+  const table = {};
+  group.set.forEach(p => table[p.toString()] = group.set.reduce((acc, pp) => {
+    acc[pp.toString()] = group.mul(p, pp).toString();
+    return acc;
+  }, {}));
+  console.table(table);
+}
 
 export {
+  buildInverse,
   checkClosure,
+  checkGroupProperties,
   checkIdentity,
   checkInverse,
   checkIsomorphism,
   inverseIsUnique,
   isCommutative,
   isAbelian,
+  printGroup,
+  printTable,
 }
