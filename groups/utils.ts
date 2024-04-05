@@ -112,10 +112,35 @@ function inverseIsUnique<T>(G: Group<T>): boolean {
 
   return violations.length === 0;
 }
+function findIdentity<T>(set: T[], mul: BinaryOperation<T>): T {
+  // find e for the first item in the set
+  const g = set.at(0)!;
+  const ge = set.filter((item) => mul(g, item) === g);
+  return ge[0];
+}
 
-function fromGenerator<T>(generatingSet: T[], mul: BinaryOperation<T>) {
-  // TODO Schreier-Sims Algorithm
+function fromGenerator<T>(generatingSet: T[], mul: BinaryOperation<T>, inverse: UnaryOperation<T>): Group<T> {
+  // TODO Schreier-Sims Algorithm ?
   // https://mathstrek.blog/2018/06/12/schreier-sims-algorithm/
+
+  const set = [...generatingSet]
+
+  for (let index = 0; index < set.length; index++) {
+    const g = set[index];
+    set.forEach(h => {
+      const gh = mul(g, h);
+      if (!set.includes(gh)) set.push(gh);
+    })
+  }
+
+  const e = findIdentity(set, mul)
+  
+  return {
+    e,
+    set,
+    mul,
+    inverse
+  }
 }
 
 function findIdentityElement<T>(group: Group<T>): T {
@@ -126,7 +151,7 @@ function findIdentityElement<T>(group: Group<T>): T {
 }
 
 function buildInverse<T>(group: Group<T>): UnaryOperation<T> {
-  return (a: T) => group.set.find(maybe_aInverse => group.mul(a, maybe_aInverse) === group.e);
+  return (a: T) => group.set.find(maybe_aInverse => group.mul(a, maybe_aInverse) === group.e)!;
 }
 
 function checkGroupProperties<T>(group: Group<T>) {
@@ -163,6 +188,7 @@ export {
   checkIdentity,
   checkInverse,
   checkIsomorphism,
+  fromGenerator,
   inverseIsUnique,
   isCommutative,
   isAbelian,
