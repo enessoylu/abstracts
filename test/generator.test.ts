@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
-import { CyclicGroupOf, fromGenerator } from "../groups"
 import { DihedralGroupOfOrder } from "../groups/dihedral";
+import { CyclicGroupOf } from "../groups/cyclic";
+import { fromGenerator } from "../groups/utils";
 
 describe('Generator', () => {
   test('cyclic', () => {

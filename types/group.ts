@@ -70,9 +70,6 @@ type Automorphism<T1, T2> = Homomorphism<T1, T2>
 // |xH| = |H|, Lagrange theorem: |H| | |G|
 type Coset<T> = T[]
 
-/* number of left cosets of H under G */
-type IndexOfSubgroup = number;
-
 export type {
     Group,
     Isomorphism,

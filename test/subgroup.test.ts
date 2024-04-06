@@ -1,7 +1,8 @@
 import { test } from "vitest";
-import { fromCycles, inverseOfPermutation, multiply, printTable, toCycleString } from "../groups"
 import { SymmetricGroupOf } from "../groups/symmetric";
-import { Group } from "../types";
+import { Group } from "../types/group";
+import { fromCycles, inverseOfPermutation, multiply, toCycleString } from "../groups/permutation";
+import { printTable } from "../groups/utils";
 
 test('Subgroups', () => {
   const S3 = SymmetricGroupOf(3);

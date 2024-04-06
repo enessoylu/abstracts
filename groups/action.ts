@@ -1,4 +1,4 @@
-import { Group, Homomorphism } from "../types";
+import { Group, Homomorphism } from "../types/group";
 
 type Orbit<T> = (a: T) => T[]
 

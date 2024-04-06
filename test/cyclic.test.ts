@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { CyclicGroupOf } from "../groups"
+import { CyclicGroupOf } from "../groups/cyclic";
 
 test('CyclicGroupOf', () => {
   const C6 = CyclicGroupOf(6);

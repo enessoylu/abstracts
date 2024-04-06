@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { asTransposes, fromCycles, toCycleString, multiply, permute } from "../groups";
+import { asTransposes, fromCycles, multiply, permute, toCycleString } from "../groups/permutation";
 
 test('permute', () => {
   expect(permute(0)).toHaveLength(0)

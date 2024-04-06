@@ -1,8 +1,8 @@
-import { CyclicGroupOf } from "../groups";
 import { Action, checkFirstProperty, checkSecondProperty } from "../groups/action";
+import { CyclicGroupOf } from "../groups/cyclic";
 import { DihedralGroupOfOrder } from "../groups/dihedral";
 import { SymmetricGroupOf } from "../groups/symmetric";
-import { Group, Homomorphism } from "../types";
+import { Group, Homomorphism } from "../types/group";
 import { describe, expect, it } from 'vitest'
 
 describe('Actions', () => {
