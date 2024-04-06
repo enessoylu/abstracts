@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { Group } from "../types/group";
 import { SymmetricGroupOf } from "../groups/symmetric";
 import { CyclicGroupOf } from "../groups/cyclic";
-import { fromGenerator } from "../groups/utils";
+import { fromGenerator } from "../groups/group";
 
 // Let G be a finite group and H a subgroup of G. Then the number of elements in H is a divisor of the number of elements in G.
 describe('Lagrange theorem', () => {
