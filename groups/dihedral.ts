@@ -3,7 +3,7 @@
 // s,t are adjacent axes of symmetry on n-gon, st is a rotation
 // s = rf, t = f, st = rff
 import { Group } from "../types/group";
-import { range } from "../utils";
+import { range } from "./utils";
 
 export const DihedralGroupOfOrder = (order: number): Group<string> => {
   const set = dihedralSetOfOrder(order);

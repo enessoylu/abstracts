@@ -1,5 +1,5 @@
 import { Group } from "../types/group";
-import { range } from "../utils";
+import { range } from "./utils";
 
 // any number from 0...n which is relatively prime with n generates order n cyclic group
 const CyclicGroupOf = (n: number): Group<number> => {

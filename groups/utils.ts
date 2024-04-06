@@ -32,6 +32,9 @@ function isSetFormedByPartitions(set: any[], partitions: any[][]) {
 function areSetsIdentical(a: any[], b: any[]) {
   return a.length === b.length && a.every(e => b.includes(e))
 }
+function range(length: number, start = 0) {
+  return [...Array(length)].map((_, idx) => idx + start)
+}
 
 export {
   areDisjointSets,
@@ -39,4 +42,5 @@ export {
   uniqueSets,
   isSetFormedByPartitions,
   areSetsIdentical,
+  range,
 }
