@@ -112,6 +112,7 @@ function inverseIsUnique<T>(G: Group<T>): boolean {
 
   return violations.length === 0;
 }
+
 function findIdentity<T>(set: T[], mul: BinaryOperation<T>): T {
   // find e for the first item in the set
   const g = set.at(0)!;
@@ -134,20 +135,13 @@ function fromGenerator<T>(generatingSet: T[], mul: BinaryOperation<T>, inverse: 
   }
 
   const e = findIdentity(set, mul)
-  
+
   return {
     e,
     set,
     mul,
     inverse
   }
-}
-
-function findIdentityElement<T>(group: Group<T>): T {
-  // find e for the first item in the set
-  const g = group.set.at(0);
-  const goe = group.set.filter((item) => group.mul(g, item) === g);
-  return goe[0];
 }
 
 function buildInverse<T>(group: Group<T>): UnaryOperation<T> {
@@ -172,7 +166,7 @@ function printGroup<T>(group: Group<T>) {
   return `Set ${group.set.join(', ')}\n\te ${group.e}`;
 }
 
-function printTable<T>(group: Group<T>) {
+function printTable<T extends { toString: () => string }>(group: Group<T>) {
   const table = {};
   group.set.forEach(p => table[p.toString()] = group.set.reduce((acc, pp) => {
     acc[pp.toString()] = group.mul(p, pp).toString();
