@@ -1,4 +1,4 @@
-import { Group } from "../types";
+import { Group } from "../types/group";
 import { fromCycles, toCycleString, permute, multiply, inverseOfPermutation } from "./permutation";
 
 const SymmetricGroupOf = (n: number): Group<string> => {

@@ -1,4 +1,4 @@
-import { BinaryOperation, Group, UnaryOperation } from "../types";
+import { Group } from "../types/group";
 import { range } from "../utils";
 
 // any number from 0...n which is relatively prime with n generates order n cyclic group

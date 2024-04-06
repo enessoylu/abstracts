@@ -1,4 +1,4 @@
-import { BinaryOperation, Group, Isomorphism, UnaryOperation } from "../types";
+import { BinaryOperation, Group, Isomorphism, UnaryOperation } from "../types/group";
 
 function checkIsomorphism<T1, T2>(G: Group<T1>, H: Group<T2>, ϕ: Isomorphism<T1, T2>) {
   if (G.set.length !== H.set.length) {
