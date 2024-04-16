@@ -1,7 +1,3 @@
-// n rotations n reflections
-// r rotation s reflection, rsr = s, ss = e, rr... = e 
-// s,t are adjacent axes of symmetry on n-gon, st is a rotation
-// s = rf, t = f, st = rff
 import { Group } from "../types/group";
 import { range } from "./utils";
 
@@ -46,7 +42,7 @@ export const dihedralMulOfOrder = (order: number) => (a: string, b: string): str
       .replaceAll('srs', 'r')
       .replaceAll(rn, '')
       .replaceAll('rs', rn + 'rs')
-      .replaceAll(rPrime + 's', 'sr')
+      .replaceAll(rPrime + 's', 'sr') // sr = r's
   }
   return c
 }
