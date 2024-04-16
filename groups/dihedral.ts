@@ -6,6 +6,7 @@ import { Group } from "../types/group";
 import { range } from "./utils";
 
 export const DihedralGroupOfOrder = (order: number): Group<string> => {
+  console.assert(order % 2 === 0, 'Order of dihedral should be even.')
   const set = dihedralSetOfOrder(order);
   const mul = dihedralMulOfOrder(order);
   const inverse = dihedralInverseOfOrder(order);
@@ -38,12 +39,14 @@ export const dihedralSetOfOrder = (order: number) => {
 
 export const dihedralMulOfOrder = (order: number) => (a: string, b: string): string => {
   const rn = 'r'.repeat(order / 2)
+  const rPrime = 'r'.repeat(order / 2 - 1)
   let c = a + b;
-  while (['ss', 'rsr', rn, 'rs'].some(d => c.includes(d))) {
+  while (['ss', 'srs', rn, 'rs'].some(d => c.includes(d))) {
     c = c.replaceAll('ss', '')
-      .replaceAll('rsr', 's')
+      .replaceAll('srs', 'r')
       .replaceAll(rn, '')
-      .replaceAll('rs', 'rs' + rn)
+      .replaceAll('rs', rn + 'rs')
+      .replaceAll(rPrime + 's', 'sr')
   }
   return c
 }
