@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest"
-import { areDisjointSets, isSetContainedInSets, uniqueSets, isSetFormedByPartitions, areSetsIdentical } from "../groups/utils"
+import { areDisjointSets, isSetContainedInSets, uniqueSets, isSetFormedByPartitions, areSetsIdentical, isSubsetOf } from "../groups/utils"
 
 describe('test utilities', () => {
   test('areDisjointSets', () => {
@@ -30,5 +30,13 @@ describe('test utilities', () => {
   test('areSetsIdentical', () => {
     expect(areSetsIdentical([1, 2], [2, 1])).toBe(true)
     expect(areSetsIdentical([1, 2, 3], [2, 1])).toBe(false)
+  })
+
+  test('isSubsetOf', () => {
+    expect(isSubsetOf([], [])).toBe(true)
+    expect(isSubsetOf([], [1, 2, 3])).toBe(true)
+    expect(isSubsetOf([1, 2, 3], [1, 2, 3])).toBe(true)
+    expect(isSubsetOf([1, 2, 3], [1, 2, 3, 4])).toBe(true)
+    expect(isSubsetOf([1, 2, 3], [1, 2])).toBe(false)
   })
 })

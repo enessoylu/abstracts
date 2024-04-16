@@ -13,6 +13,11 @@ function isSetContainedInSets(set: any[], sets: any[][]) {
     .some(_set => areSetsIdentical(set, _set))
 }
 
+/** check if set1 is a subset of set2 */
+function isSubsetOf<T>(set1: T[], set2: T[]) {
+  return set1.every(s1 => set2.includes(s1))
+}
+
 function uniqueSets<T>(sets: T[][]) {
   return sets.reduce<T[][]>((acc, set) => {
     if (isSetContainedInSets(set, acc)) {
@@ -39,6 +44,7 @@ function range(length: number, start = 0) {
 export {
   areDisjointSets,
   isSetContainedInSets,
+  isSubsetOf,
   uniqueSets,
   isSetFormedByPartitions,
   areSetsIdentical,
