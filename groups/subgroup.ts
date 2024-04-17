@@ -1,4 +1,4 @@
-import { Group } from "../types/group";
+import { Center, Group } from "../types/group";
 import { isSubsetOf } from "./utils";
 
 const firstSubgroupTheorem = <T>(G: Group<T>, H: T[]): boolean => {
@@ -36,7 +36,18 @@ const isNormalSubgroup = <T>(G: Group<T>, H: T[]): boolean => {
   }))
 }
 
+/** The center of a group G is the set of elements that commute with every element of G */
+const centerOf = <T>(G: Group<T>): Center<T> => {
+  return G.set.filter(g => G.set.every(h => G.mul(g, h) === G.mul(h, g)))
+}
+
+const isTrivialGroup = <T>(G: Group<T>) => {
+  return G.set.length === 1 && G.set[0] === G.e
+}
+
 export {
+  centerOf,
+  isTrivialGroup,
   firstSubgroupTheorem,
   secondSubgroupTheorem,
   isNormalSubgroup,

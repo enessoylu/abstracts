@@ -70,7 +70,11 @@ type Automorphism<T1, T2> = Homomorphism<T1, T2>
 // |xH| = |H|, Lagrange theorem: |H| | |G|
 type Coset<T> = T[]
 
+/** The center of a group G is the set of elements that commute with every element of G */
+type Center<T> = T[]
+
 export type {
+    Center,
     Group,
     Isomorphism,
     Coset,
