@@ -39,7 +39,7 @@ export const dihedralMulOfOrder = (order: number) => (a: string, b: string): str
   let c = a + b;
   while (['ss', 'srs', rn, 'rs'].some(d => c.includes(d))) {
     c = c.replaceAll('ss', '')
-      .replaceAll('srs', 'r')
+      .replaceAll('srs', rPrime)
       .replaceAll(rn, '')
       .replaceAll('rs', rn + 'rs')
       .replaceAll(rPrime + 's', 'sr') // sr = r's

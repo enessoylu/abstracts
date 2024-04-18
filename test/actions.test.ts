@@ -1,4 +1,5 @@
 import { Action, checkFirstProperty, checkSecondProperty } from "../groups/action";
+import { conjugacy } from "../groups/conjugacy";
 import { CyclicGroupOf } from "../groups/cyclic";
 import { DihedralGroupOfOrder } from "../groups/dihedral";
 import { SymmetricGroupOf } from "../groups/symmetric";
@@ -32,22 +33,22 @@ describe('Actions', () => {
   })
 
   it('D4 acts on rectangle', () => {
-    //   B┌────┐C
+    //   D┌────┐C
     //    │    │ 
     //    │    │ 
-    //   A└────┘D 
+    //   A└────┘B 
     const set = ['A', 'B', 'C', 'D'];
     const D4 = DihedralGroupOfOrder(8);
     const map: Homomorphism<[string, string], string> = ([g, a]) => {
       const idx = set.indexOf(a);
       return {
         '': ['A', 'B', 'C', 'D'],
-        'r': ['B', 'C', 'D', 'A'],
+        'r': ['D', 'A', 'B', 'C'],
         'rr': ['C', 'D', 'A', 'B'],
-        'rrr': ['D', 'A', 'B', 'C'],
-        's': ['B', 'A', 'D', 'C'],
+        'rrr': ['B', 'C', 'D', 'A'],
+        's': ['D', 'C', 'B', 'A'],
         'sr': ['A', 'D', 'C', 'B'],
-        'srr': ['D', 'C', 'B', 'A'],
+        'srr': ['B', 'A', 'D', 'C'],
         'srrr': ['C', 'B', 'A', 'D'],
       }[g]![idx]
     }
@@ -70,11 +71,8 @@ describe('Actions', () => {
     // (g,x) = g.x.g'
     const G: Group<any> = group;
     const X = G.set;
-    const map: Homomorphism<[any, any], any> = ([g, x]) => {
-      const gx = G.mul(g, x);
-      const gPrime = G.inverse(g);
-      return G.mul(gx, gPrime)
-    }
+    const conjugate = conjugacy(G)
+    const map: Homomorphism<[any, any], any> = ([g, x]) => conjugate(g, x)
     const action: Action<any, any> = {
       group: G,
       set: X,

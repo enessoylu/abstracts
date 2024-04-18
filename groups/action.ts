@@ -39,7 +39,7 @@ const checkFirstProperty = <G, A>(action: Action<G, A>) => {
   return A.every(a => action.map([e, a]) === a)
 }
 
-/* ∀ g, h ∈ G and ∀ a ∈ A | g (h.a) = (g.h) a */
+/* ∀ g, h ∈ G and ∀ a ∈ A | g.(h.a) = (g.h).a */
 const checkSecondProperty = <G, A>(action: Action<G, A>) => {
   const A = action.set;
   const G = action.group.set;
