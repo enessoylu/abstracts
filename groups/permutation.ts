@@ -2,9 +2,16 @@ import { range } from "./utils";
 
 const CycleListMatchRegexp = /\(([\d|\,]*)\)/g;
 
-const permute = (length: number) => {
-  return permuteRec(range(length, 1))
+function permute<T>(list: T[]): T[][]
+function permute<T>(length: number): number[][]
+function permute<T>(lengthOrList: number | T[]) {
+  if (typeof lengthOrList === 'number') {
+    return permuteRec(range(lengthOrList, 1))
+  }
+
+  return permuteRec(lengthOrList)
 }
+
 const permuteRec = <T>(list: T[], acc: T[][] = [], left: T[] = []): T[][] => {
   if (list.length === 1) {
     acc.push([...left, list[0]])
