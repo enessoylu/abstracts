@@ -1,4 +1,5 @@
-import { BinaryOperation, Group, Isomorphism, UnaryOperation } from "../types/group";
+import { Automorphism, BinaryOperation, Group, Isomorphism, UnaryOperation } from "../types/group";
+import { permute } from "./permutation";
 
 function checkIsomorphism<T1, T2>(G: Group<T1>, H: Group<T2>, ϕ: Isomorphism<T1, T2>) {
   if (G.set.length !== H.set.length) {
@@ -175,6 +176,14 @@ function printTable<T extends { toString: () => string }>(group: Group<T>) {
   console.table(table);
 }
 
+const setOfAllAutomorphisms = <T>(set: T[]): Automorphism<T>[] => {
+  // TODO assert set is unique
+  const idxMap = new Map(set.map((idx, t) => ([idx, t])))
+  const permutations = permute(set)
+
+  return permutations.map(p => a => p[idxMap.get(a)!])
+}
+
 export {
   buildInverse,
   checkClosure,
@@ -188,4 +197,5 @@ export {
   isAbelian,
   printGroup,
   printTable,
+  setOfAllAutomorphisms,
 }
