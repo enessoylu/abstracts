@@ -37,6 +37,8 @@ function isSetFormedByPartitions(set: any[], partitions: any[][]) {
 function areSetsIdentical(a: any[], b: any[]) {
   return a.length === b.length && a.every(e => b.includes(e))
 }
+
+/** range with length from start (default 0) */
 function range(length: number, start = 0) {
   return [...Array(length)].map((_, idx) => idx + start)
 }
