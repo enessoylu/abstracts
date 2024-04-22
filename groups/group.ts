@@ -163,10 +163,6 @@ function checkGroupProperties<T>(group: Group<T>) {
   return eIsUnique;
 }
 
-function printGroup<T>(group: Group<T>) {
-  return `Set ${group.set.join(', ')}\n\te ${group.e}`;
-}
-
 function printTable<T extends { toString: () => string }>(group: Group<T>) {
   const table = {};
   group.set.forEach(p => table[p.toString()] = group.set.reduce((acc, pp) => {
@@ -195,7 +191,6 @@ export {
   inverseIsUnique,
   isCommutative,
   isAbelian,
-  printGroup,
   printTable,
   setOfAllAutomorphisms,
 }
