@@ -1,14 +1,5 @@
+import { Field } from "./field";
 import { Automorphism, BinaryOperation, Group } from "./group"
-
-type Field<F> = {
-  addition: BinaryOperation<F>
-  subtraction: BinaryOperation<F>
-  multiplication: BinaryOperation<F>
-  division: BinaryOperation<F>
-}
-
-type GaloisField<F> = Field<F> & { set: F[]}
-type FinitFieild<F> = GaloisField<F>
 
 type Matrix<F extends Field<any>> = F extends Field<infer T> ? T[][] : never
 
@@ -46,8 +37,6 @@ type V2 = Vector<[number, number]>
 
 export {
   VectorSpace,
-  FinitFieild,
-  Field,
   Vector,
   Matrix,
   V2,

@@ -1,4 +1,5 @@
-import { Field, Matrix } from "../types/representation";
+import { Field } from "../types/field";
+import { Matrix } from "../types/representation";
 import { range } from "./utils";
 
 const ADDITIVE_IDENTITY = 0; // hardcoded for F=R
