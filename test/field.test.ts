@@ -7,8 +7,8 @@ test('gcd', () => {
   expect(gcd(18, 12)).toBe(6)
 })
 
-test ('multiplicative inverse', () => {
-  const {mul_inv, mul} = finiteFieldArithmetic(463)
+test('multiplicative inverse', () => {
+  const { mul_inv, mul } = finiteFieldArithmetic(463)
 
   expect(mul(mul_inv(143)!, 143)).toBe(1)
   expect(mul(mul_inv(34)!, 34)).toBe(1)

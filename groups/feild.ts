@@ -1,10 +1,22 @@
+import { range } from "./utils";
+
 const finiteFieldArithmetic = (m: number) => {
+  if (!isPrime(m)) {
+    return;
+  }
+
+  const add = (a: number, b: number) => (a + b) % m;
+  const sub = (a: number, b: number) => (a - b) % m + m;
+  const mul = (a: number, b: number) => (a * b) % m;
+  const mul_inv = multiplicativeInverse(m);
+  const div = (a: number, b: number) => mul(a, mul_inv(b)!);
+
   return {
-    add: (a: number, b: number) => (a + b) % m,
-    sub: (a: number, b: number) => (a - b) % m + m,
-    mul: (a: number, b: number) => (a * b) % m,
-    div: (a: number, b: number) => void 0,
-    mul_inv: multiplicativeInverse(m)
+    add,
+    sub,
+    mul,
+    div,
+    mul_inv
   }
 }
 
@@ -67,6 +79,11 @@ const gcd = (a: number, b: number) => {
   return a === 0 ? b : gcd(b % a, a);
 }
 
+const isPrime = (a: number) => {
+  const root = Math.ceil(Math.sqrt(a))
+  return range(root - 1, 2).every(n => a % n !== 0)
+}
+
 /** [r, a - q.b] */
 const form = (a: number, b: number) => {
   const { q, r } = abqr(a, b)
@@ -80,13 +97,6 @@ const abqr = (a: number, b: number) => {
   const r = a % b;
   return { a, b, q, r }
 }
-
-/** a = b.q + r */
-// const abqr = (s) => {
-//   const reg = /([\d]) = ([\d])\.([\d]) \+ ([\d])/;
-//   const [_, a, b, q, r] = [...reg.exec(s)!]
-//   return {a,b,q,r}
-// }
 
 export {
   finiteFieldArithmetic,
