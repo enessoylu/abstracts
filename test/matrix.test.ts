@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { R, multiplier } from "../groups/representation";
+import { R, multiplier } from "../groups/matrix";
 
 test('matrix multiplication', () => {
   const multiply = multiplier(R)
