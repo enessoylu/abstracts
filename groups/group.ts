@@ -1,4 +1,4 @@
-import { Automorphism, BinaryOperation, Group, Isomorphism, UnaryOperation } from "../types/group";
+import { Automorphism, BinaryOperation, Group, Isomorphism, UnaryOperation } from "../definitions/group";
 import { permute } from "./permutation";
 
 function checkIsomorphism<T1, T2>(G: Group<T1>, H: Group<T2>, ϕ: Isomorphism<T1, T2>) {

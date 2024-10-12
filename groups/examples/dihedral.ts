@@ -1,5 +1,5 @@
-import { Group } from "../types/group";
-import { range } from "./utils";
+import { Group } from "../../definitions/group";
+import { range } from "../utils";
 
 export const DihedralGroupOfOrder = (order: number): Group<string> => {
   console.assert(order % 2 === 0, 'Order of dihedral should be even.')

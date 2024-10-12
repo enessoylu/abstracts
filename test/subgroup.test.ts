@@ -1,10 +1,10 @@
 import { expect, test } from "vitest";
-import { SymmetricGroupOf } from "../groups/symmetric";
-import { Group } from "../types/group";
+import { SymmetricGroupOf } from "../groups/varieties/symmetric";
+import { Group } from "../definitions/group";
 import { fromCycles, inverseOfPermutation, multiply, toCycleString } from "../groups/permutation";
 import { fromGenerator, printTable } from "../groups/group";
-import { DihedralGroupOfOrder } from "../groups/dihedral";
-import { centerOf, firstSubgroupTheorem, isNormalSubgroup, secondSubgroupTheorem } from "../groups/subgroup";
+import { centerOf, firstSubgroupTheorem, isNormalSubgroup, secondSubgroupTheorem } from "../groups/properties/subgroup";
+import { DihedralGroupOfOrder } from "../groups/varieties/dihedral";
 
 test('Subgroups', () => {
   const S3 = SymmetricGroupOf(3);

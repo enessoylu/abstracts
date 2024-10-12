@@ -1,8 +1,8 @@
 import { expect, test } from "vitest";
-import { SymmetricGroupOf } from "../groups/symmetric";
-import { indexOfSubgroup, leftCosetOf, rightCosetOf } from "../groups/coset";
+import { SymmetricGroupOf } from "../groups/varieties/symmetric";
 import { fromGenerator } from "../groups/group";
 import { areDisjointSets, isSetFormedByPartitions, uniqueSets } from "../groups/utils";
+import { leftCosetOf, rightCosetOf, indexOfSubgroup } from "../groups/properties/coset";
 
 // Let G be a group and H a subgroup. Then the left cosets of H in G partition G
 test('left cosets of H partition G', () => {

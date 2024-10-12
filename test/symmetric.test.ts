@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { SymmetricGroupOf } from "../groups/symmetric"
+import { SymmetricGroupOf } from "../groups/varieties/symmetric"
 
 test('Symmetric', () => {
   const S3 = SymmetricGroupOf(3);

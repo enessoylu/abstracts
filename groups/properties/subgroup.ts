@@ -1,5 +1,5 @@
-import { Center, Group } from "../types/group";
-import { isSubsetOf } from "./utils";
+import { Center, Group } from "../../definitions/group";
+import { isSubsetOf } from "../utils";
 
 const firstSubgroupTheorem = <T>(G: Group<T>, H: T[]): boolean => {
   const H_isASubsetOf_G = isSubsetOf(H, G.set);

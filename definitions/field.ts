@@ -8,6 +8,7 @@ type Field<F> = {
 }
 
 type GaloisField<F> = Field<F> & { set: F[] }
+/**  A field with a finite number of members  */
 type FinitFieild<F> = GaloisField<F>
 
 export {

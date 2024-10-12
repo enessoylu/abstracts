@@ -1,5 +1,5 @@
-import { Field } from "../types/field";
-import { VectorSpace } from "../types/representation";
+import { Field } from "../definitions/field";
+import { VectorSpace } from "../definitions/representation";
 import { range } from "./utils";
 
 type Matrices<F extends Field<any>> = F extends Field<infer T> ? VectorSpace<T[][], F> : never

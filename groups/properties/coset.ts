@@ -1,5 +1,5 @@
-import { Coset, Group } from "../types/group"
-import { uniqueSets } from "./utils"
+import { Coset, Group } from "../../definitions/group"
+import { uniqueSets } from "../utils"
 
 /** gH = {gh : h an element of H} for g in G. */
 const leftCosetOf = <T>(H: Group<T>, g: T): Coset<T> => {

@@ -1,9 +1,10 @@
-import { Action, checkFirstProperty, checkSecondProperty } from "../groups/action";
-import { conjugacy } from "../groups/conjugacy";
-import { CyclicGroupOf } from "../groups/cyclic";
-import { DihedralGroupOfOrder } from "../groups/dihedral";
-import { SymmetricGroupOf } from "../groups/symmetric";
-import { Group, Homomorphism } from "../types/group";
+
+import { CyclicGroupOf } from "../groups/varieties/cyclic";
+import { DihedralGroupOfOrder } from "../groups/varieties/dihedral";
+import { SymmetricGroupOf } from "../groups/varieties/symmetric";
+import { Action, checkFirstProperty, checkSecondProperty } from "../groups/properties/action";
+import { conjugacy } from "../groups/properties/conjugacy";
+import { Group, Homomorphism } from "../definitions/group";
 import { describe, expect, it } from 'vitest'
 
 describe('Actions', () => {

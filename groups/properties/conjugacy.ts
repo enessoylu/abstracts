@@ -1,5 +1,6 @@
-import { Group } from "../types/group";
-import { uniqueSets } from "./utils";
+import { Group } from "../../definitions/group";
+import { uniqueSets } from "../utils";
+
 
 /** If x, y ∈ G, we say x is conjugate to y if there exists a g ∈ G such that gy = xg */
 const conjugacyClassOf = <T>(x: T, G: Group<T>): T[] => {

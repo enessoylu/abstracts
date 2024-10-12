@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { dihedralInverseOfOrder, dihedralMulOfOrder, dihedralSetOfOrder } from '../groups/dihedral'
+import { dihedralMulOfOrder, dihedralSetOfOrder, dihedralInverseOfOrder } from '../groups/varieties/dihedral';
 
 test('dihedral multiplication', () => {
   const mul = dihedralMulOfOrder(8);

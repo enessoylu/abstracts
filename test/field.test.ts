@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { finiteFieldArithmetic, gcd } from "../groups/feild";
+import { finiteFieldArithmetic, gcd } from "../groups/field";
 
 test('gcd', () => {
   expect(gcd(23, 1)).toBe(1)

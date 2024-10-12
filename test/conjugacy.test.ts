@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
-import { DihedralGroupOfOrder } from "../groups/dihedral";
 import { areDisjointSets, isSetFormedByPartitions } from "../groups/utils";
-import { allConjugacyClassess } from "../groups/conjugacy";
+import { allConjugacyClassess } from "../groups/properties/conjugacy";
+import { DihedralGroupOfOrder } from "../groups/varieties/dihedral";
 
 const D4 = DihedralGroupOfOrder(8)
 const conjugacyClassess = allConjugacyClassess(D4)
