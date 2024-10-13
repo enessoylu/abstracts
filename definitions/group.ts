@@ -31,10 +31,9 @@
  *         └─────┘  └─────┘           └─────┘  └─────┘
  */
 
-// The Cancellation Law for Groups: Let (G,⋅) be a group and let a,b,c∈G. If a⋅b=a⋅c or b⋅a=c⋅a then b=c.
+import { BinaryOperation, UnaryOperation } from "./basics"
 
-type UnaryOperation<T> = (s: T) => T
-type BinaryOperation<T> = (s: T, t: T) => T
+// The Cancellation Law for Groups: Let (G,⋅) be a group and let a,b,c∈G. If a⋅b=a⋅c or b⋅a=c⋅a then b=c.
 
 interface Semigroup<T> {
     readonly set: T[]
@@ -75,6 +74,4 @@ export type {
     Isomorphism,
     Coset,
     Homomorphism,
-    BinaryOperation,
-    UnaryOperation
 } 

@@ -1,5 +1,5 @@
+import { BinaryOperation } from "./basics";
 import { Field } from "./field";
-import { BinaryOperation } from "./group";
 
 export type VectorSpace<V, F extends Field<any>> = {
     set: V[];
